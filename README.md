@@ -1,4 +1,4 @@
-# 🚀 Elétron - IT Asset Management System (MVP)
+# 🚀 Elétron - IT Asset Management System (MVP) - DEVELOPED WITH AI ASSISTANCE
 
 A lightweight and robust internal IT asset management system designed to track hardware inventory (notebooks), maintain employee assignment histories, and generate compliance/responsibility terms.
 
