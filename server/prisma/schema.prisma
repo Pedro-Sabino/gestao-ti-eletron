@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Equipamento {
+  id           String      @id @default(uuid())
+  patrimonio   String      @unique
+  modelo       String
+  numeroSerie  String      @unique
+  status       String      @default("Disponível")
+  criadoEm     DateTime    @default(now())
+  historicos   Historico[] 
+}
+
+model Historico {
+  id            String      @id @default(uuid())
+  colaborador   String
+  cliente       String?     // NOVO: Empresa para onde o note vai
+  dataEnvio     DateTime    @default(now())
+  dataDevolucao DateTime?
+  status        String      @default("Em uso")
+  equipamentoId String
+  equipamento   Equipamento @relation(fields: [equipamentoId], references: [id], onDelete: Cascade)
+}

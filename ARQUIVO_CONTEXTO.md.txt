@@ -1,0 +1,36 @@
+# Documentação Técnica: Elétron Active Administrator (MVP)
+
+Este documento serve como a "memória central" do projeto para ser importado em ferramentas de IA (como Antigravity/Cursor). Ele contém a estrutura, regras de negócio e o estado atual do desenvolvimento.
+
+## 1. Visão Geral
+O **Elétron Active Administrator** é um sistema de gestão de ativos (notebooks) focado na operação da empresa Elétron. O objetivo é automatizar o controle de quem está com qual máquina, gerenciar o ciclo de vida do equipamento e gerar termos de responsabilidade automaticamente.
+
+## 2. Stack Tecnológica
+- **Frontend:** React (Vite) + Tailwind CSS + Recharts (Gráficos).
+- **Backend:** Node.js + Express + Prisma ORM.
+- **Banco de Dados:** PostgreSQL hospedado no Supabase.
+- **IA:** Anthropic API (Claude 3 Haiku) para extração de dados via OCR.
+- **PDF:** `pdfmake` para geração de termos no lado do cliente (browser).
+
+## 3. Modelo de Dados (Prisma Schema)
+```prisma
+model Equipamento {
+  id           String      @id @default(uuid())
+  patrimonio   String      @unique
+  modelo       String
+  numeroSerie  String      @unique
+  status       String      @default("Disponível") // Ativo, Disponível, Manutenção
+  criadoEm     DateTime    @default(now())
+  historicos   Historico[]
+}
+
+model Historico {
+  id            String      @id @default(uuid())
+  colaborador   String
+  cliente       String?
+  dataEnvio     DateTime    @default(now())
+  dataDevolucao DateTime?
+  status        String      @default("Em uso") // Em uso, Devolvido
+  equipamentoId String
+  equipamento   Equipamento @relation(fields: [equipamentoId], references: [id], onDelete: Cascade)
+}

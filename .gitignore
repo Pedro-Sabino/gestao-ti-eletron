@@ -1,0 +1,16 @@
+# Dependências
+node_modules/
+
+# Chaves de API e Senhas
+.env
+.env.local
+.env.*
+
+# Builds do Front-end
+dist/
+build/
+.next/
+
+# Arquivos de log e SO
+npm-debug.log*
+.DS_Store
