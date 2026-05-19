@@ -14,3 +14,7 @@ build/
 # Arquivos de log e SO
 npm-debug.log*
 .DS_Store
+
+# Bloquear termos em PDF com dados sensíveis
+*.pdf
+Termo_*.pdf
